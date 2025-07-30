@@ -1,16 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const addButton = document.getElementById('add-task-btn'); // Button to add a task
-    const taskInput = document.getElementById('task-input'); // Input field for the task
-    const taskList = document.getElementById('task-list'); // List to display tasks
+    const addButton = document.getElementById('add-task-btn');
+    const taskInput = document.getElementById('task-input');
+    const taskList = document.getElementById('task-list');
 
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || []; // Initialize tasks from localStorage or an empty array
+    let tasks = [];
 
-    // Load tasks from localStorage
-    tasks.forEach(function(task) {
-        createTaskElement(task);
-    });
+    function loadTasks() {
+        tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.forEach(function(task) {
+            createTaskElement(task);
+        });
+    }
 
-    // Function to create a task <li> with delete button
     function createTaskElement(taskText) {
         const listItem = document.createElement('li');
         listItem.textContent = taskText;
@@ -28,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
         taskList.appendChild(listItem);
     }
 
-    // Function to add a task
     function addTask() {
         const taskText = taskInput.value.trim();
         if (taskText === '') {
@@ -36,22 +36,19 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Save to local storage
         tasks.push(taskText);
         localStorage.setItem('tasks', JSON.stringify(tasks));
-
-        // Add to DOM
         createTaskElement(taskText);
-
-        // Clear input
         taskInput.value = '';
     }
 
     addButton.addEventListener('click', addTask);
-
     taskInput.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             addTask();
         }
     });
+
+    // Load tasks on DOMContentLoaded
+    loadTasks();
 });
