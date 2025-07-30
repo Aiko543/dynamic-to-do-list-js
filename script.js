@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () { // Ensure the DOM is
 
         const deleteButton = document.createElement('button'); // Create a button to delete the task
         deleteButton.textContent = 'Remove'; // Set the text for the delete button
-        deleteButton.className = 'remove-btn';// Add a class for styling
+        deleteButton.classList.add(remove-btn);// Add a class for styling
         deleteButton.addEventListener('click', function () { // Add an event listener to the delete button
             taskList.removeChild(listItem);
         });
